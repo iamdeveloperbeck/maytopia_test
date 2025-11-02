@@ -172,7 +172,7 @@ export default function Comment() {
         userId,
         phone: formData.phone,
         comment: formData.message,
-        type,
+        type: type!,
         stol: stol ? parseInt(stol) : undefined,
         skidkaPercent: 2
       };
