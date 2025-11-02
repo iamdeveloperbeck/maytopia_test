@@ -32,12 +32,13 @@ export default function Home() {
       <section className="">
         <div className="max-w-4xl mx-auto">
           <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-border">
-            <video
+            {/* <video
               id="myVideo"
-              src="/public/test.mp4"
+              src="https://youtu.be/0VJbnTBWvcQ?si=5f0Ti4cpmmunE7th"
               controls
               autoPlay
-            ></video>
+            ></video> */}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/0VJbnTBWvcQ?si=FvnDi1uoUbcmtGtU" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
           </div>
 
           {/* Menu Button */}
