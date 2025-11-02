@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export const useDevToolsBlocker = (onDetect: () => void) => {
+export const useDevToolsBlocker = (onDetect?: () => void) => {
   useEffect(() => {
     let blocked = false;
 
@@ -12,7 +12,7 @@ export const useDevToolsBlocker = (onDetect: () => void) => {
       ) {
         if (!blocked) {
           blocked = true;
-          onDetect();
+          onDetect?.();
         }
       }
     };
@@ -25,7 +25,7 @@ export const useDevToolsBlocker = (onDetect: () => void) => {
       if (end - start > 100) {
         if (!blocked) {
           blocked = true;
-          onDetect();
+          onDetect?.();
         }
       }
     };
@@ -37,13 +37,13 @@ export const useDevToolsBlocker = (onDetect: () => void) => {
         (e.ctrlKey && e.key.toUpperCase() === "U")
       ) {
         e.preventDefault();
-        onDetect();
+        onDetect?.();
       }
     };
 
     const detectByContext = (e: MouseEvent) => {
       e.preventDefault();
-      onDetect();
+      onDetect?.();
     };
 
     window.addEventListener("keydown", detectByKey, true);

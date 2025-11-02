@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Menyu from "./pages/Menyu";
 import Comment from "./pages/Comment";
-import { useCallback, useState } from "react";
 import { useDevToolsBlocker } from "./hooks/useDevToolsBlocker";
 
 function App() {
@@ -14,7 +13,7 @@ function App() {
   //   console.clear();
   // }, []);
 
-  // useDevToolsBlocker(handleDetect);
+  useDevToolsBlocker();
 
   return (
     <Routes>
