@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Keyboard } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
 
 import menu1 from "../assets/menuuz1.jpg";
 import menu2 from "../assets/menuuz2.jpg";
@@ -96,7 +97,9 @@ export default function Dishes() {
               pagination={{ clickable: true }}
               keyboard={{ enabled: true }}
               initialSlide={activeIndex}
-              onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+              onSlideChange={(swiper: SwiperType) =>
+                setActiveIndex(swiper.activeIndex)
+              }
             >
               {DISHES.map(({ id, image }) => (
                 <SwiperSlide key={id}>
