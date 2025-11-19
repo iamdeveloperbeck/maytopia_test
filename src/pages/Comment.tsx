@@ -1,7 +1,7 @@
 import { Send } from "lucide-react";
 import { memo, useCallback, useState } from "react";
 import { toast, Toaster } from "sonner";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useCheckUser from "@/hooks/useCheckUser";
 import {
   addComment,
@@ -102,7 +102,7 @@ const HeroSection = memo(() => (
         Fikringiz biz uchun muhim!
       </h1>
       <p className="text-lg text-primary-foreground/90 text-balance">
-        Bizning restaranimiz haqida o'z fikringizni yuboring va 2% skidkaga ega bo'ling
+        Bizning restoranimiz haqida o'z fikringizni yuboring va 2% chegirmaga ega bo'ling!
       </p>
     </div>
   </section>
@@ -230,6 +230,13 @@ export default function Comment() {
                     Iltimos raqamni to'g'ri kiriting. Sizning maʼlumotlaringiz himoyalangan
                   </p>
                 </form>
+              </div>
+              <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/menu" className="w-full sm:w-auto">
+                  <Button className="w-full sm:w-auto bg-primary hover:bg-secondary text-primary-foreground font-bold py-3 px-8 text-lg rounded-lg transition-colors">
+                    Menyuni ko'rish
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
