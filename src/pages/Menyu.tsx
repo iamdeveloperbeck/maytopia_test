@@ -1,111 +1,118 @@
-import { useCallback, useMemo, useState, type JSX } from "react";
+import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Keyboard } from "swiper/modules";
 
-type Dish = {
-  id: number;
-  name: string;
-  category: string;
-  price: string;
-  description: string;
-  image?: string;
-};
+import menu1 from "../assets/menuuz1.jpg";
+import menu2 from "../assets/menuuz2.jpg";
+import menu3 from "../assets/menuuz3.jpg";
+import menu4 from "../assets/menuuz4.jpg";
+import menu5 from "../assets/menuuz5.jpg";
+import menu6 from "../assets/menuuz6.jpg";
+import menu7 from "../assets/menuuz7.jpg";
 
-const DISHES: Dish[] = [
-  { id: 1, name: "Palov", category: "Asosiy taomlar", price: "45,000", description: "Gosht, guruch, zarafshon bilan tayyorlangan o'zbekiston klassik palov", image: "/plov-dish.jpg" },
-  { id: 2, name: "Shurpa", category: "Shorolar", price: "35,000", description: "Hayvon go'shti, sabzavot va kartoshka bilan sof shoropa", image: "/shorba-soup.jpg" },
-  { id: 3, name: "Manti", category: "Asosiy taomlar", price: "40,000", description: "Mol go'shti bilan to'ldirilgan yumshoq mantular", image: "/manti-dumplings.jpg" },
-  { id: 4, name: "Qozon Kabob", category: "Asosiy taomlar", price: "55,000", description: "Qozonda go'sht va sabzavotdan tayyorlangan traditsiyon kabob", image: "/qozon-kebab.jpg" },
-  { id: 5, name: "Lagman", category: "Asosiy taomlar", price: "38,000", description: "Uzun makaron, go'sht va sabzavot bilan o'zbek uslubida lagman", image: "/lagman-noodles.jpg" },
-  { id: 6, name: "Samsa", category: "Snacklar", price: "25,000", description: "Sotib olingan xamirda go'sht bilan to'ldirish samsa", image: "/samsa-pastry.jpg" },
-  { id: 7, name: "Qavardak", category: "Shorolar", price: "48,000", description: "Mol go'shti va sabzavotning mazza aralashmasi qavardak", image: "/quavordak-stew.jpg" },
-  { id: 8, name: "Kabob", category: "Asosiy taomlar", price: "50,000", description: "Uzunroq go'shti, piyoz va sabzavot bilan yasalgan kabob", image: "/kabob-skewers.jpg" },
+const DISHES = [
+  { id: 1, image: menu1 },
+  { id: 2, image: menu2 },
+  { id: 3, image: menu3 },
+  { id: 4, image: menu4 },
+  { id: 5, image: menu5 },
+  { id: 6, image: menu6 },
+  { id: 7, image: menu7 },
 ];
 
-const CATEGORIES = ["Barcha", "Asosiy taomlar", "Shorolar", "Snacklar"];
+export default function Dishes() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-function DishCard({ dish }: { dish: Dish }) {
-  return (
-    <div className="bg-card rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-border hover:border-primary flex flex-col group">
-      <div className="relative w-full aspect-square overflow-hidden bg-muted">
-        <img
-          src={dish.image ?? "/placeholder.svg"}
-          alt={dish.name}
-          loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-        />
+  const openModal = (index: number) => {
+    setActiveIndex(index);
+    setIsOpen(true);
+  };
 
-        <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/50 to-transparent p-3">
-          <span className="text-sm text-white font-semibold">{dish.category}</span>
-        </div>
-      </div>
-
-      <div className="p-4 flex flex-col grow">
-        <h3 className="text-lg font-bold text-foreground mb-1">{dish.name}</h3>
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{dish.description}</p>
-
-        <div className="flex items-center justify-between mb-4 mt-auto">
-          <span className="text-2xl font-bold text-primary">{dish.price}</span>
-          <span className="text-sm text-muted-foreground">so'm</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function Menyu(): JSX.Element {
-  const [selectedCategory, setSelectedCategory] = useState<string>(CATEGORIES[0]);
-
-  const handleSelectCategory = useCallback((cat: string) => {
-    setSelectedCategory(cat);
-  }, []);
-
-  const filtered = useMemo(() => {
-    if (selectedCategory === "Barcha") return DISHES;
-    return DISHES.filter((d) => d.category === selectedCategory);
-  }, [selectedCategory]);
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   return (
-    <main className="min-h-screen bg-background">
-      {/* Hero */}
-      <section className="bg-linear-to-br from-primary to-secondary py-12 md:py-16 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-3 text-balance">Ovqat Menyusi</h1>
-          <p className="text-lg text-primary-foreground/90 text-balance">Eng so'ngi taomlar to'plami</p>
-        </div>
+    <>
+      {/* Asosiy swiper (rasmlar) */}
+      <section className="w-full py-8">
+        <h1 className="text-center font-bold text-[32px] mb-3">Menu</h1>
+        <Swiper
+          modules={[Navigation, Pagination]}
+          spaceBetween={16}
+          slidesPerView={1.2}
+          pagination={{ clickable: true }}
+          breakpoints={{
+            640: { slidesPerView: 2.2 },
+            1024: { slidesPerView: 3.2 },
+          }}
+          className="pb-10"
+        >
+          {DISHES.map(({ id, image }, index) => (
+            <SwiperSlide key={id}>
+              <button
+                type="button"
+                onClick={() => openModal(index)}
+                className="w-full h-full block focus:outline-none"
+              >
+                <img
+                  src={image}
+                  alt="dish"
+                  className="w-full h-full object-cover rounded-2xl"
+                />
+              </button>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </section>
 
-      {/* Filter */}
-      <section className="py-8 px-4 border-b border-border">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex gap-3 overflow-x-auto pb-2">
-            {CATEGORIES.map((cat) => {
-              const active = cat === selectedCategory;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => handleSelectCategory(cat)}
-                  aria-pressed={active}
-                  className={`px-5 py-2 rounded-full font-semibold whitespace-nowrap transition-all duration-300 ${
-                    active ? "bg-primary text-primary-foreground" : "bg-muted text-foreground hover:bg-primary hover:text-primary-foreground"
-                  }`}
-                >
-                  {cat}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      {/* Popup (lightbox) */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center"
+          onClick={closeModal}
+        >
+          {/* Ichki wrapper (click bubbleni to'xtatish uchun) */}
+          <div
+            className="relative w-full max-w-5xl px-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Yopish tugmasi */}
+            <button
+              type="button"
+              onClick={closeModal}
+              className="absolute -top-10 right-2 text-white text-2xl md:text-3xl"
+              aria-label="Close"
+            >
+              ×
+            </button>
 
-      {/* Menu Grid */}
-      <section className="py-12 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {filtered.map((dish) => (
-              <DishCard key={dish.id} dish={dish} />
-            ))}
+            <Swiper
+              modules={[Navigation, Pagination, Keyboard]}
+              spaceBetween={16}
+              slidesPerView={1}
+              navigation
+              pagination={{ clickable: true }}
+              keyboard={{ enabled: true }}
+              initialSlide={activeIndex}
+              onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+            >
+              {DISHES.map(({ id, image }) => (
+                <SwiperSlide key={id}>
+                  <div className="w-full max-h-[80vh] flex items-center justify-center">
+                    <img
+                      src={image}
+                      alt="dish big"
+                      className="max-h-[80vh] w-auto object-contain rounded-2xl"
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
-      </section>
-    </main>
+      )}
+    </>
   );
 }
